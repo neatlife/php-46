@@ -13,6 +13,9 @@
 -- 评论内容 字符串 varchar(200) 200不是固定的，适量调整
 -- 回复的是那个评论 reply_id 数字 如果不评论不回复另一个评论 reply_id应该找不到回复的评论, 默认空（空数字 0）
 -- 评论是评论的那一个文章呢？文章的id 数字 不能为空 没有默认值
+-- 审核状态 待审核，审核通过，审核未通过
+   -- 以前的写法 enum('待审核', '审核通过', '审核未通过')
+   -- 灵活的写法 数字 tinyint 1：待审核 2：审核通过 3: 审核未通过
 
 CREATE TABLE `icomment` (
   `id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -20,7 +23,8 @@ CREATE TABLE `icomment` (
   `publish_time` INT NOT NULL,
   `content` varchar(200) NOT NULL,
   `reply_id` INT UNSIGNED NOT NULL DEFAULT 0,
-  `article_id` INT NOT NULL
+  `article_id` INT NOT NULL,
+  `status` tinyint NOT NULL DEFAULT 2 COMMENT'审核状态 1：待审核 2：审核通过 3: 审核未通过'
 )engine=innodb DEFAULT CHARSET utf8;
 
 insert into icomment values

@@ -33,9 +33,12 @@ class Model extends PDOWrapper
     /**
      * 查询出所有的数据
      */
-    public function findAll($where = '2 > 1')
+    public function findAll($where = '2 > 1', $size = false, $start = 0)
     {
         $sql = "SELECT * FROM {$this->getTableName()} WHERE {$where}";
+        if ($size !== false) {
+            $sql .= " LIMIT {$start}, {$size}";
+        }
         return $this->getAll($sql);
     }
 

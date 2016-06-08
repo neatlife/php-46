@@ -10,6 +10,7 @@ class Category extends Controller
     // 分类的列表
     public function index()
     {
+        $this->denyAccess();
         // 1. 使用分类的模型查询出所有的分类
         $categoryModel = CategoryModel::model();
         // SELECT *, count(article.id) AS article_count
@@ -31,6 +32,7 @@ class Category extends Controller
     // 分类的删除
     public function delete()
     {
+        $this->denyAccess();
         // 1. 接收即将删除的分类的id
         $id = $_GET['id'];
 
@@ -61,6 +63,7 @@ class Category extends Controller
 
     public function add()
     {
+        $this->denyAccess();
         var_dump($_POST);
 
         // if (提交表单) {
@@ -100,6 +103,7 @@ class Category extends Controller
 
     public function edit()
     {
+        $this->denyAccess();
         // $id = $_GET['id'];
         // $id = addslashes($_GET['id']);
         // $id = intval($_GET['id']);

@@ -11,6 +11,7 @@ class Article extends Controller
 {
     public function add()
     {
+        $this->denyAccess();
         var_dump($_SESSION['user']);
         // if (!empty($_POST)) {
         // if (isset($_POST['submit'])) {
@@ -46,6 +47,7 @@ class Article extends Controller
 
     public function index()
     {
+        $this->denyAccess();
         var_dump($_POST);
         // 0表示不加这个条件，我们自己规定的。
         $status = isset($_POST['status']) ? $_POST['status'] : 0;

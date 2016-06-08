@@ -39,7 +39,7 @@
                             <th><?= $icomment['id'] ?></th>
                             <th><?= $icomment['reply_content'] ?></th>
                             <th><?= $icomment['user_name'] ?></th>
-                            <th style="text-align:left"><?= $icomment['content'] ?></th>
+                            <th style="text-align:left"><?= str_repeat('->', $icomment['level']) ?> <?= $icomment['content'] ?></th>
                             <th><?= $icomment['article_name'] ?></th>
                             <th><?= date('Y-m-d H:i:s', $icomment['publish_time']) ?></th>
                             <th><a href="?c=IComment&a=delete&p=backend&id=<?= $icomment['id'] ?>">删除</a></th>

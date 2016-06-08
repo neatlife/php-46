@@ -20,7 +20,7 @@ class Article extends Controller
 {
     public function index()
     {
-        var_dump($_POST);
+        //var_dump($_POST);
 
         // $_GET, $_POST 都有q参数
         // $_REQUEST = $_GET + $_POST

@@ -52,4 +52,18 @@ class IComment extends Model
         }
         return $noLimitIComments;
     }
+
+    public function limitlessLevel($comments, $parentId=0, $level = 0)
+    {
+        static $limitlessComments = array();
+
+        foreach($comments as $comment) {
+            if ($comment['reply_id'] == $parentId) {
+                $comment['level'] = $level;
+                $limitlessComments[] = $comment;
+                $this->limitlessLevel($comments, $comment['id'], $level + 1);
+            }
+        }
+        return $limitlessComments;
+    }
 }

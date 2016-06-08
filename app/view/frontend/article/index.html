@@ -26,10 +26,18 @@
         </div>
         <div class="menu-right">
             <ul id="info">
-
-                <li>欢迎 admin(管理员)！</li>
-                <li><a href="/admin/admin.php" target="_blank">管理</a></li>
-                <li><a href="index.php?module=Privilege&action=logout">退出</a></li>
+                <{if isset($smarty.session.user) and $smarty.session.loginFlag}>
+                    <li>欢迎 <{$smarty.session.user.username}>
+                        <{if $smarty.session.user.nickname}>
+                            (<{$smarty.session.user.nickname}>)
+                        <{/if}>
+                        ！
+                    </li>
+                    <li><a href="?p=backend&c=Index&a=index" target="_blank">管理</a></li>
+                    <li><a href="?p=backend&c=User&a=logout">退出</a></li>
+                <{else}>
+                    <li><a href="?p=backend&c=User&a=login">登录</a></li>
+                <{/if}>
             </ul>
         </div>
     </div>

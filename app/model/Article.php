@@ -53,7 +53,7 @@ class Article extends Model
         if ($size != 0) {
             $sql .= " limit {$start}, {$size}";
         }
-        echo $sql;
+        //echo $sql;
         return $this->getAll($sql);
     }
 

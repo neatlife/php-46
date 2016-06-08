@@ -42,13 +42,13 @@ class Controller
     //下面这个方法，用于在需要的时候进行“显示信息并跳转”
     protected function _redirect($msg, $url = '?', $time = 3, $type = 2)
     {
-        //if ($type == 2) {
-        //    include ROOT . DS . 'app' . DS . 'view' . DS . 'redirect.html';
-        //} else {
+        if ($type == 2) {
+            include ROOT . DS . 'app' . DS . 'view' . DS . 'redirect.html';
+        } else {
             // header('refresh:2; url=userlist.php')
-            echo "<h1>$msg</h1>";
             header("refresh:{$time}; url={$url}");
-        //}
+            echo "<h1>$msg</h1>";
+        }
     }
 
     // protected function _loadHtml($file, $word, $word2)
@@ -78,5 +78,20 @@ class Controller
         // include './../app/view/' . PLATFORM . '/' . $file . '.html';
         // include 'c:\xxx\xxx\xxx\a\b\c./../app/view/' . PLATFORM . '/' . $file . '.html';
         include ROOT . '/app/view/' . PLATFORM . '/' . $file . '.html';
+    }
+
+    protected function denyAccess()
+    {
+        // var_dump($_SESSION['user']);
+        // session_start();
+        //if ($loginFlag) {// 判断有没有登录
+        //    return $this->_redirect("必须登录", '?c=User&p=backend&a=login')
+        //}
+        if (!isset($_SESSION['loginFlag'])) {// 如果session里的loginFlag不存在，即是未登录
+            $_SESSION['loginFlag'] = false;
+        }
+        if ($_SESSION['loginFlag'] == false) {// 判断有没有登录
+            return $this->_redirect("必须登录", '?c=User&p=backend&a=login');
+        }
     }
 }

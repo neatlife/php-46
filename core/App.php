@@ -65,7 +65,7 @@ class App
     protected static function _defineRouteConst()
     {
         $p = isset($_GET['p']) ? $_GET['p'] :"frontend";// 平台
-        $c = isset($_GET['c']) ? $_GET['c'] :"User"; // 控制器
+        $c = isset($_GET['c']) ? $_GET['c'] :"Article"; // 控制器
         $a = isset($_GET['a']) ? $_GET['a'] :"index"; // 动过
         define("PLATFORM", $p);	//平台 platform
         define("CONTROLLER", $c);	// 控制器 controller

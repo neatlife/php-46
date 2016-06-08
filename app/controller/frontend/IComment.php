@@ -11,12 +11,7 @@ class IComment extends Controller
     // 添加评论
     public function add()
     {
-        if (!isset($_SESSION['loginFlag'])) {// 如果session里的loginFlag不存在，即是未登录
-            $_SESSION['loginFlag'] = false;
-        }
-        if ($_SESSION['loginFlag'] == false) {// 判断有没有登录
-            return $this->_redirect("必须登录后评论", '?c=User&p=backend&a=login');
-        }
+        $this->denyAccess();
 
         if (ICommentModel::model()->insert(array(
             'user_id' => $_SESSION['user']['id'],

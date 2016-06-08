@@ -5,11 +5,13 @@ use core\Controller;
 //use app\model\User;
 use app\model\User as UserModel;// 和我们控制器名字冲突，我们给导入的类重命名
 use vendor\Captcha;
+use vendor\Pager;
 
 class User extends Controller
 {
     public function index()
     {
+        $this->denyAccess();
         // 用户列表 控制器 => 用户控制器里的列表
 
         // 连接数据库
@@ -21,6 +23,19 @@ class User extends Controller
         // mysql_select_db('userlist2');
         $userModel = UserModel::model();
 
+        // 分页
+        $size = isset($_GET['size']) ? $_GET['size'] : 2;// 一页显示几条数据。
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;// 当前第几页
+        $start = ($page - 1)* $size;
+
+        // 生成分页的按钮
+        $pager = new Pager(UserModel::model()->count(), $size, $page, '', array(
+            'p' => 'backend',
+            'c' => 'User',
+            'a' => 'index',
+            'size' => $size,
+        ));
+
         // 拿出用户表的所有数据
         // $sql = "SELECT * FROM user WHERE 2 > 1;";
         // $resultResource = mysql_query($sql);
@@ -31,19 +46,21 @@ class User extends Controller
         //    $users[] = $user;
         //}
         // $users = $userModel->findAll('2 > 1');
-        $users = $userModel->findAll();
-        var_dump($users);
+        $users = $userModel->findAll('2 > 1', $size, $start);
+        //var_dump($users);
 
         // 包含文件：require require_once include include_once
         // require 'userlist.html';
         $this->_loadHtml('user/userlist', array(
             //'users1' => $users,
             'users' => $users,
+            'pagerHtml' => $pager->showPage(),
         ));
     }
 
     public function delete()
     {
+        $this->denyAccess();
         // 用户删除 动作(原始的控制器？)
 
         // 链接数据库
@@ -72,6 +89,7 @@ class User extends Controller
 
     public function add()
     {
+        $this->denyAccess();
         // 添加用户的控制器
         // root
 
@@ -115,6 +133,7 @@ class User extends Controller
 
     public function edit()
     {
+        $this->denyAccess();
         // 修改用户的控制器
 
         var_dump($_POST);
@@ -194,6 +213,10 @@ class User extends Controller
             $_SESSION['loginFlag'] = true;
             $_SESSION['user'] = $user;
             // 更新用户的last_login_time字段
+            $userModel->updateById($user['id'], array(
+                'last_login_time' => time(),
+                'last_login_ip' => $_SERVER['REMOTE_ADDR'],
+            ));
             return $this->_redirect("登录成功", '?c=Index&p=backend&a=index');
         } else {// 没找到用户,登录失败
             //$loginFlag = false;
@@ -205,6 +228,7 @@ class User extends Controller
     // 用户退出登录
     public function logout()
     {
+        $this->denyAccess();
         // echo 'hahaha';
         // 登录是因为$_SESSION['loginFlag'] 等于 true;
         // 退出就回到没有登录的状态，是因为$_SESSION['loginFlag'] 等于 false

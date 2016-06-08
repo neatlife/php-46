@@ -6,20 +6,14 @@ use core\Controller;
 
 class Index extends Controller
 {
+    public function __construct()
+    {
+        $this->denyAccess();
+    }
+
     // 后台首页，后台首页-骨架.html
     public function index()
     {
-        // var_dump($_SESSION['user']);
-        // session_start();
-        //if ($loginFlag) {// 判断有没有登录
-        //    return $this->_redirect("必须登录", '?c=User&p=backend&a=login')
-        //}
-        if (!isset($_SESSION['loginFlag'])) {// 如果session里的loginFlag不存在，即是未登录
-            $_SESSION['loginFlag'] = false;
-        }
-        if ($_SESSION['loginFlag'] == false) {// 判断有没有登录
-            return $this->_redirect("必须登录", '?c=User&p=backend&a=login');
-        }
         return $this->_loadHtml('index/index');
     }
 

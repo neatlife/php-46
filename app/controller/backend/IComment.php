@@ -10,7 +10,10 @@ class IComment extends Controller
 {
     public function index()
     {
-        $icomments = ICommentModel::model()->getList();
+        $this->denyAccess();
+        $icomments = ICommentModel::model()->limitlessLevel(
+            ICommentModel::model()->getList()
+        );
         // var_dump($icomments);die;
 
         return $this->_loadHtml('icomment/index', array(
@@ -20,6 +23,7 @@ class IComment extends Controller
 
     public function delete()
     {
+        $this->denyAccess();
         $id = $_GET['id'];
         if (ICommentModel::model()->deleteById($id)) {
             // 删除成功
